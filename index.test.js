@@ -29,3 +29,38 @@ test('测试 Promise reject 代码', () => {
     expect(data).toMatch('Type Error!!!')
   })
 })
+
+test('测试 resolves 代码', () => {
+  expect.assertions(1)
+  return expect(handleDataReject({ res: 1 })).resolves.toEqual({ res: 2 })
+})
+
+test('测试 rejects 代码', () => {
+  expect.assertions(1)
+  return expect(handleDataReject('test rejected')).rejects.toMatch('Type Error!!!')
+})
+
+test('测试 async 代码', async () => {
+  expect.assertions(1)
+  const data = await handleDataReject({ res: 1 })
+  expect(data).toEqual({ res: 2 })
+})
+
+test('测试 async error 代码', async () => {
+  expect.assertions(1)
+  try {
+    await handleDataReject('test rejected')
+  } catch(e) {
+    expect(e).toMatch('Type Error!!!')
+  }
+})
+
+test('测试 async 代码', async () => {
+  expect.assertions(1)
+  await expect(handleDataReject({ res: 1 })).resolves.toEqual({ res: 2 })
+})
+
+test('测试 async error 代码', async () => {
+  expect.assertions(1)
+  await expect(handleDataReject('test rejected')).rejects.toMatch('Type Error!!!')
+})
